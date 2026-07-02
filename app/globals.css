@@ -1,4 +1,4 @@
-@keyframes dmxdtFadeUp {
+@keyframes dmxdtRise {
   from {
     opacity: 0;
     transform: translateY(22px);
@@ -11,14 +11,13 @@
   }
 }
 
-.dmxdt-fade-up {
+.dmxdt-rise {
   opacity: 0;
-  animation: dmxdtFadeUp 900ms cubic-bezier(.2,.8,.2,1) forwards;
+  animation: dmxdtRise 900ms cubic-bezier(.2,.8,.2,1) forwards;
 }
 
-.dmxdt-delay-1 { animation-delay: 180ms; }
-.dmxdt-delay-2 { animation-delay: 340ms; }
-.dmxdt-delay-3 { animation-delay: 560ms; }
-.dmxdt-delay-4 { animation-delay: 760ms; }
-.dmxdt-delay-5 { animation-delay: 920ms; }
-.dmxdt-delay-6 { animation-delay: 1100ms; }
+.delay-1 { animation-delay: 180ms; }
+.delay-2 { animation-delay: 360ms; }
+.delay-3 { animation-delay: 560ms; }
+.delay-4 { animation-delay: 760ms; }
+.delay-5 { animation-delay: 960ms; }
