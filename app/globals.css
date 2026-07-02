@@ -1,14 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@keyframes dmxdtFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
 
-:root { --bg:#050505; --fg:#f5f1e8; --muted:#a49b90; --line:rgba(255,255,255,.12); }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin:0; background:var(--bg); color:var(--fg); font-family:Arial,'Noto Sans KR',sans-serif; letter-spacing:-.03em; }
-a { color:inherit; text-decoration:none; }
-.section { min-height:78vh; padding:120px 8vw; border-top:1px solid var(--line); }
-.eyebrow { font-size:12px; letter-spacing:.24em; color:var(--muted); text-transform:uppercase; }
-.title { font-size:clamp(42px,7vw,108px); line-height:.94; margin:18px 0 26px; font-weight:900; white-space:pre-line; }
-.copy { max-width:860px; font-size:clamp(18px,2vw,24px); line-height:1.75; color:#d2cabf; }
-@media (max-width:900px) { .section { padding:88px 24px; min-height:auto; } }
+.dmxdt-fade-up {
+  opacity: 0;
+  animation: dmxdtFadeUp 900ms cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+.dmxdt-delay-1 { animation-delay: 180ms; }
+.dmxdt-delay-2 { animation-delay: 340ms; }
+.dmxdt-delay-3 { animation-delay: 560ms; }
+.dmxdt-delay-4 { animation-delay: 760ms; }
+.dmxdt-delay-5 { animation-delay: 920ms; }
+.dmxdt-delay-6 { animation-delay: 1100ms; }
