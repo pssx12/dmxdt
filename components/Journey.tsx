@@ -1,21 +1,26 @@
 const items = [
-  ['01','APPAREL','좋은 옷으로 질문을 입습니다.'],
-  ['02','PLACE','카페, 식당, 정원. 생각이 머무는 공간.'],
-  ['03','STAY','모텔과 프라이빗 스파. 쉼의 방식을 다시 묻습니다.'],
-  ['04','LIFE COMMUNITY','삶의 마지막까지 이어지는 공동체.'],
+  ['Now', 'The Beginning', 'DMXDT의 공식 플랫폼이 시작됩니다.'],
+  ['Next', 'The Archive', '질문, 기록, 실패, 성장을 축적합니다.'],
+  ['Future', 'The Community', '생각하는 사람들의 동행을 만듭니다.'],
+  ['Legacy', 'Build What Lasts', '오래 남을 것을 구축합니다.'],
 ];
+
 export default function Journey() {
   return (
-    <section id="journey" className="section">
-      <p className="eyebrow">JOURNEY</p>
-      <h2 className="title">하나의 철학,\n여러 개의 세계.</h2>
-      <div className="mt-12 grid gap-5 md:grid-cols-4">
-        {items.map(([num,title,copy]) => (
-          <article key={title} className="min-h-[260px] border border-white/10 bg-[#0d0d0d] p-8 flex flex-col justify-between">
-            <span className="text-xs tracking-[.2em] text-[#8f887e]">{num}</span>
-            <div><h3 className="mb-4 text-3xl font-black">{title}</h3><p className="leading-7 text-[#cfc6ba]">{copy}</p></div>
-          </article>
-        ))}
+    <section id="journey" className="dmxdt-section bg-[#080808] text-[#f5f1e8]">
+      <div className="mx-auto max-w-6xl">
+        <p className="dmxdt-eyebrow">Journey</p>
+        <h2 className="dmxdt-title mt-8">This is not a launch. It is a beginning.</h2>
+
+        <div className="mt-16 grid gap-5 md:grid-cols-4">
+          {items.map(([time, title, copy]) => (
+            <article key={title} className="min-h-[260px] border border-[#f5f1e8]/12 bg-[#050505] p-7">
+              <span className="text-xs uppercase tracking-[0.3em] text-[#c47a3a]">{time}</span>
+              <h3 className="mt-12 text-3xl font-black tracking-[-0.06em]">{title}</h3>
+              <p className="mt-6 leading-7 text-[#d2cabf]">{copy}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
