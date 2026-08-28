@@ -5,6 +5,7 @@ const nav = [
   ['PHILOSOPHY', '#philosophy'],
   ['FOUNDATION', '#foundation'],
   ['CURRENT', '#development'],
+  ['APPAREL', '#apparel'],
   ['ARCHIVE', '#archive'],
   ['JOURNEY', '#journey'],
   ['CONTACT', '#contact'],
