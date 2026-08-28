@@ -1,37 +1,68 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ANONYMOUS, loadTossPayments } from '@tosspayments/tosspayments-sdk';
 
 const colors = ['Black', 'Off White', 'Melange Grey'];
 const sizes = ['S', 'M', 'L', 'XL'];
-const paymentMethods = ['카드·간편결제', '퀵계좌이체', '가상계좌'];
 const testPrice = 1000;
+type PaymentWidgets = ReturnType<Awaited<ReturnType<typeof loadTossPayments>>['widgets']>;
 
 export default function CheckoutPage() {
   const [color, setColor] = useState(colors[0]);
   const [size, setSize] = useState(sizes[2]);
   const [quantity, setQuantity] = useState(1);
-  const [payment, setPayment] = useState(paymentMethods[0]);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [isRequesting, setIsRequesting] = useState(false);
   const [paymentError, setPaymentError] = useState('');
+  const [widgetReady, setWidgetReady] = useState(false);
+  const widgetsRef = useRef<PaymentWidgets | null>(null);
   const selection = useMemo(() => `${color} · ${size} · ${quantity}개`, [color, size, quantity]);
-  const canTestPay = termsAccepted && customerName.trim() && customerPhone.trim() && customerEmail.trim();
+  const canTestPay = widgetReady && termsAccepted && customerName.trim() && customerPhone.trim() && customerEmail.trim();
+
+  useEffect(() => {
+    let active = true;
+    const initializeWidgets = async () => {
+      try {
+        const tossPayments = await loadTossPayments('test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm');
+        const widgets = tossPayments.widgets({ customerKey: ANONYMOUS });
+        await widgets.setAmount({ currency: 'KRW', value: testPrice });
+        await Promise.all([
+          widgets.renderPaymentMethods({ selector: '#payment-method', variantKey: 'DEFAULT' }),
+          widgets.renderAgreement({ selector: '#payment-agreement', variantKey: 'AGREEMENT' }),
+        ]);
+        if (active) {
+          widgetsRef.current = widgets;
+          setWidgetReady(true);
+        }
+      } catch (error) {
+        if (active) setPaymentError(error instanceof Error ? error.message : '결제위젯을 불러오지 못했습니다.');
+      }
+    };
+    initializeWidgets();
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    if (widgetsRef.current) {
+      widgetsRef.current.setAmount({ currency: 'KRW', value: testPrice * quantity }).catch(() => {
+        setPaymentError('테스트 결제금액을 변경하지 못했습니다.');
+      });
+    }
+  }, [quantity]);
 
   const requestTestPayment = async () => {
     setPaymentError('');
     setIsRequesting(true);
     try {
-      const tossPayments = await loadTossPayments('test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm');
-      const paymentClient = tossPayments.payment({ customerKey: ANONYMOUS });
+      const widgets = widgetsRef.current;
+      if (!widgets) throw new Error('결제위젯이 아직 준비되지 않았습니다.');
       const orderId = `DMXDT-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-      const paymentRequest = {
-        amount: { currency: 'KRW', value: testPrice * quantity },
+      await widgets.requestPayment({
         orderId,
         orderName: `DMXDT Foundation 001 · ${color} · ${size}`,
         successUrl: `${window.location.origin}/checkout/success`,
@@ -39,14 +70,7 @@ export default function CheckoutPage() {
         customerEmail: customerEmail.trim(),
         customerName: customerName.trim(),
         customerMobilePhone: customerPhone.replace(/[^0-9]/g, ''),
-      } as const;
-      if (payment === '카드·간편결제') {
-        await paymentClient.requestPayment({ ...paymentRequest, method: 'CARD' });
-      } else if (payment === '퀵계좌이체') {
-        await paymentClient.requestPayment({ ...paymentRequest, method: 'TRANSFER' });
-      } else {
-        await paymentClient.requestPayment({ ...paymentRequest, method: 'VIRTUAL_ACCOUNT' });
-      }
+      });
     } catch (error) {
       setPaymentError(error instanceof Error ? error.message : '결제창을 열지 못했습니다.');
       setIsRequesting(false);
@@ -114,12 +138,10 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <fieldset>
-              <legend className="checkout-label">결제수단</legend>
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                {paymentMethods.map((item) => <button key={item} type="button" onClick={() => setPayment(item)} className={`checkout-choice justify-center ${payment === item ? 'checkout-choice-active' : ''}`}>{item}</button>)}
-              </div>
-            </fieldset>
+            <section aria-label="토스페이먼츠 테스트 결제수단" className="overflow-hidden bg-white py-3 text-[#111]">
+              <div id="payment-method" />
+              <div id="payment-agreement" />
+            </section>
           </div>
         </div>
 
