@@ -4,6 +4,7 @@ import Why from '@/components/Why';
 import Philosophy from '@/components/Philosophy';
 import Foundation from '@/components/Foundation';
 import DevelopmentStatus from '@/components/DevelopmentStatus';
+import ApparelPreview from '@/components/ApparelPreview';
 import Journey from '@/components/Journey';
 import Footer from '@/components/Footer';
 
@@ -17,6 +18,7 @@ export default function Home() {
         <Philosophy />
         <Foundation />
         <DevelopmentStatus />
+        <ApparelPreview />
 
         <section id="archive" className="dmxdt-section bg-[#050505] text-[#f5f1e8]">
           <div className="mx-auto max-w-6xl">
