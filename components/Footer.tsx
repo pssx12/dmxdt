@@ -8,6 +8,7 @@ export default function Footer() {
         </div>
         <div className="text-sm leading-7 md:text-right">
           <p>Brand Platform · Archive · Journey · Foundation</p>
+          <p><a href="/policy" className="transition hover:text-[#f5f1e8]">배송·교환·환불 정책</a></p>
           <p>© DMXDT. All Rights Reserved.</p>
         </div>
       </div>

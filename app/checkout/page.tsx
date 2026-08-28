@@ -12,6 +12,7 @@ export default function CheckoutPage() {
   const [size, setSize] = useState(sizes[2]);
   const [quantity, setQuantity] = useState(1);
   const [payment, setPayment] = useState(paymentMethods[0]);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const selection = useMemo(() => `${color} · ${size} · ${quantity}개`, [color, size, quantity]);
 
   return (
@@ -40,6 +41,14 @@ export default function CheckoutPage() {
                 ))}
               </div>
             </fieldset>
+
+            <label className="flex cursor-pointer items-start gap-3 border-t border-white/10 pt-7 text-sm leading-6 text-[#a49b90]">
+              <input type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} className="mt-1 h-4 w-4 accent-[#c47a3a]" />
+              <span>
+                주문 내용을 확인했으며, 출시 시 적용되는{' '}
+                <Link href="/policy" className="text-[#f5f1e8] underline underline-offset-4">배송·교환·환불 정책</Link>에 동의합니다.
+              </span>
+            </label>
 
             <fieldset>
               <legend className="checkout-label">사이즈</legend>
@@ -89,7 +98,7 @@ export default function CheckoutPage() {
               <div className="flex justify-between"><dt className="text-[#a49b90]">배송비</dt><dd>출시 전 확정</dd></div>
               <div className="flex justify-between border-t border-white/10 pt-5 text-lg font-black"><dt>최종 결제금액</dt><dd>—</dd></div>
             </dl>
-            <button type="button" disabled className="w-full cursor-not-allowed bg-[#f5f1e8] px-5 py-5 text-sm font-black tracking-[0.08em] text-[#050505] opacity-45">샘플 확정 후 결제 활성화</button>
+            <button type="button" disabled className={`w-full cursor-not-allowed bg-[#f5f1e8] px-5 py-5 text-sm font-black tracking-[0.08em] text-[#050505] ${termsAccepted ? 'opacity-55' : 'opacity-35'}`}>샘플 확정 후 결제 활성화</button>
             <p className="mt-5 text-center text-xs leading-6 text-[#79736b]">현재 실제 결제와 주문 접수는 이루어지지 않습니다.</p>
           </div>
         </aside>
