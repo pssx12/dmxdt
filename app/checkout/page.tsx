@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
+import { ANONYMOUS, loadTossPayments } from '@tosspayments/tosspayments-sdk';
 
 const colors = ['Black', 'Off White', 'Melange Grey'];
 const sizes = ['S', 'M', 'L', 'XL'];
-const paymentMethods = ['신용·체크카드', '간편결제', '무통장입금'];
+const paymentMethods = ['카드·간편결제', '퀵계좌이체', '가상계좌'];
+const testPrice = 1000;
 
 export default function CheckoutPage() {
   const [color, setColor] = useState(colors[0]);
@@ -13,7 +15,43 @@ export default function CheckoutPage() {
   const [quantity, setQuantity] = useState(1);
   const [payment, setPayment] = useState(paymentMethods[0]);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [isRequesting, setIsRequesting] = useState(false);
+  const [paymentError, setPaymentError] = useState('');
   const selection = useMemo(() => `${color} · ${size} · ${quantity}개`, [color, size, quantity]);
+  const canTestPay = termsAccepted && customerName.trim() && customerPhone.trim() && customerEmail.trim();
+
+  const requestTestPayment = async () => {
+    setPaymentError('');
+    setIsRequesting(true);
+    try {
+      const tossPayments = await loadTossPayments('test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm');
+      const paymentClient = tossPayments.payment({ customerKey: ANONYMOUS });
+      const orderId = `DMXDT-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+      const paymentRequest = {
+        amount: { currency: 'KRW', value: testPrice * quantity },
+        orderId,
+        orderName: `DMXDT Foundation 001 · ${color} · ${size}`,
+        successUrl: `${window.location.origin}/checkout/success`,
+        failUrl: `${window.location.origin}/checkout/fail`,
+        customerEmail: customerEmail.trim(),
+        customerName: customerName.trim(),
+        customerMobilePhone: customerPhone.replace(/[^0-9]/g, ''),
+      } as const;
+      if (payment === '카드·간편결제') {
+        await paymentClient.requestPayment({ ...paymentRequest, method: 'CARD' });
+      } else if (payment === '퀵계좌이체') {
+        await paymentClient.requestPayment({ ...paymentRequest, method: 'TRANSFER' });
+      } else {
+        await paymentClient.requestPayment({ ...paymentRequest, method: 'VIRTUAL_ACCOUNT' });
+      }
+    } catch (error) {
+      setPaymentError(error instanceof Error ? error.message : '결제창을 열지 못했습니다.');
+      setIsRequesting(false);
+    }
+  };
 
   return (
     <main className="checkout-shell min-h-screen bg-[#050505] text-[#f5f1e8]">
@@ -69,9 +107,9 @@ export default function CheckoutPage() {
             <div>
               <p className="checkout-label">주문자·배송 정보</p>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <input aria-label="주문자 이름" className="checkout-input" placeholder="주문자 이름" />
-                <input aria-label="휴대전화번호" className="checkout-input" inputMode="tel" placeholder="휴대전화번호" />
-                <input aria-label="이메일" className="checkout-input sm:col-span-2" inputMode="email" placeholder="이메일" />
+                <input aria-label="주문자 이름" className="checkout-input" placeholder="주문자 이름" value={customerName} onChange={(event) => setCustomerName(event.target.value)} />
+                <input aria-label="휴대전화번호" className="checkout-input" inputMode="tel" placeholder="휴대전화번호" value={customerPhone} onChange={(event) => setCustomerPhone(event.target.value)} />
+                <input aria-label="이메일" className="checkout-input sm:col-span-2" inputMode="email" placeholder="이메일" value={customerEmail} onChange={(event) => setCustomerEmail(event.target.value)} />
                 <input aria-label="배송 주소" className="checkout-input sm:col-span-2" placeholder="배송 주소" />
               </div>
             </div>
@@ -94,12 +132,13 @@ export default function CheckoutPage() {
               <p className="mt-4 text-sm text-[#a49b90]">{selection}</p>
             </div>
             <dl className="space-y-4 py-7 text-sm">
-              <div className="flex justify-between"><dt className="text-[#a49b90]">상품 금액</dt><dd>출시 전 확정</dd></div>
+              <div className="flex justify-between"><dt className="text-[#a49b90]">테스트 상품 금액</dt><dd>{(testPrice * quantity).toLocaleString('ko-KR')}원</dd></div>
               <div className="flex justify-between"><dt className="text-[#a49b90]">배송비</dt><dd>출시 전 확정</dd></div>
-              <div className="flex justify-between border-t border-white/10 pt-5 text-lg font-black"><dt>최종 결제금액</dt><dd>—</dd></div>
+              <div className="flex justify-between border-t border-white/10 pt-5 text-lg font-black"><dt>테스트 결제금액</dt><dd>{(testPrice * quantity).toLocaleString('ko-KR')}원</dd></div>
             </dl>
-            <button type="button" disabled className={`w-full cursor-not-allowed bg-[#f5f1e8] px-5 py-5 text-sm font-black tracking-[0.08em] text-[#050505] ${termsAccepted ? 'opacity-55' : 'opacity-35'}`}>샘플 확정 후 결제 활성화</button>
-            <p className="mt-5 text-center text-xs leading-6 text-[#79736b]">현재 실제 결제와 주문 접수는 이루어지지 않습니다.</p>
+            <button type="button" disabled={!canTestPay || isRequesting} onClick={requestTestPayment} className={`w-full bg-[#f5f1e8] px-5 py-5 text-sm font-black tracking-[0.08em] text-[#050505] transition ${canTestPay && !isRequesting ? 'hover:bg-[#c47a3a]' : 'cursor-not-allowed opacity-35'}`}>{isRequesting ? '테스트 결제창 여는 중…' : '1,000원 테스트 결제'}</button>
+            {paymentError && <p role="alert" className="mt-4 text-sm leading-6 text-[#e89b72]">{paymentError}</p>}
+            <p className="mt-5 text-center text-xs leading-6 text-[#79736b]">토스페이먼츠 테스트 환경입니다. 실제 금액은 청구되지 않으며 주문도 접수되지 않습니다.</p>
           </div>
         </aside>
       </section>
