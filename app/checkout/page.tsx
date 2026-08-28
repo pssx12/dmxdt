@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Script from 'next/script';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ANONYMOUS, loadTossPayments } from '@tosspayments/tosspayments-sdk';
 
@@ -8,6 +9,14 @@ const colors = ['Black', 'Off White', 'Melange Grey'];
 const sizes = ['S', 'M', 'L', 'XL'];
 const testPrice = 1000;
 type PaymentWidgets = ReturnType<Awaited<ReturnType<typeof loadTossPayments>>['widgets']>;
+
+declare global {
+  interface Window {
+    daum?: {
+      Postcode: new (options: { oncomplete: (data: { zonecode: string; roadAddress: string; jibunAddress: string }) => void }) => { open: (options?: { popupTitle?: string }) => void };
+    };
+  }
+}
 
 export default function CheckoutPage() {
   const [color, setColor] = useState(colors[0]);
@@ -17,12 +26,31 @@ export default function CheckoutPage() {
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [address, setAddress] = useState('');
+  const [detailAddress, setDetailAddress] = useState('');
   const [isRequesting, setIsRequesting] = useState(false);
   const [paymentError, setPaymentError] = useState('');
   const [widgetReady, setWidgetReady] = useState(false);
   const widgetsRef = useRef<PaymentWidgets | null>(null);
   const selection = useMemo(() => `${color} · ${size} · ${quantity}개`, [color, size, quantity]);
-  const canTestPay = widgetReady && termsAccepted && customerName.trim() && customerPhone.trim() && customerEmail.trim();
+  const canTestPay = widgetReady && termsAccepted && customerName.trim() && customerPhone.trim() && customerEmail.trim() && postalCode && address && detailAddress.trim();
+
+  const openAddressSearch = () => {
+    if (!window.daum?.Postcode) {
+      setPaymentError('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 눌러주세요.');
+      return;
+    }
+    new window.daum.Postcode({
+      oncomplete: (data) => {
+        setPostalCode(data.zonecode);
+        setAddress(data.roadAddress || data.jibunAddress);
+        setDetailAddress('');
+        setPaymentError('');
+        window.setTimeout(() => document.getElementById('detail-address')?.focus(), 0);
+      },
+    }).open({ popupTitle: 'DMXDT 배송지 주소 검색' });
+  };
 
   useEffect(() => {
     let active = true;
@@ -79,6 +107,7 @@ export default function CheckoutPage() {
 
   return (
     <main className="checkout-shell min-h-screen bg-[#050505] text-[#f5f1e8]">
+      <Script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" strategy="afterInteractive" />
       <header className="border-b border-white/10 px-6 py-6 md:px-[6vw]">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <Link href="/" className="text-xl font-black tracking-[0.18em]">DMXDT</Link>
@@ -134,7 +163,12 @@ export default function CheckoutPage() {
                 <input aria-label="주문자 이름" className="checkout-input" placeholder="주문자 이름" value={customerName} onChange={(event) => setCustomerName(event.target.value)} />
                 <input aria-label="휴대전화번호" className="checkout-input" inputMode="tel" placeholder="휴대전화번호" value={customerPhone} onChange={(event) => setCustomerPhone(event.target.value)} />
                 <input aria-label="이메일" className="checkout-input sm:col-span-2" inputMode="email" placeholder="이메일" value={customerEmail} onChange={(event) => setCustomerEmail(event.target.value)} />
-                <input aria-label="배송 주소" className="checkout-input sm:col-span-2" placeholder="배송 주소" />
+                <div className="flex gap-3 sm:col-span-2">
+                  <input aria-label="우편번호" className="checkout-input min-w-0 flex-1" placeholder="우편번호" value={postalCode} readOnly />
+                  <button type="button" onClick={openAddressSearch} className="shrink-0 border border-[#c47a3a] px-5 text-sm font-bold text-[#f5f1e8] transition hover:bg-[#c47a3a] hover:text-[#050505]">주소 검색</button>
+                </div>
+                <input aria-label="기본 주소" className="checkout-input sm:col-span-2" placeholder="주소 검색을 눌러 기본주소를 입력하세요" value={address} readOnly />
+                <input id="detail-address" aria-label="상세 주소" className="checkout-input sm:col-span-2" placeholder="상세주소 (동·호수 등)" value={detailAddress} onChange={(event) => setDetailAddress(event.target.value)} />
               </div>
             </div>
 
@@ -142,6 +176,7 @@ export default function CheckoutPage() {
               <div id="payment-method" />
               <div id="payment-agreement" />
             </section>
+            <p className="text-sm leading-6 text-[#a49b90]">테스트 결제도 카드·간편결제 단계에서는 본인 결제정보 입력이 필요합니다. 토스 테스트 환경이므로 실제 금액은 출금되지 않습니다.</p>
           </div>
         </div>
 
