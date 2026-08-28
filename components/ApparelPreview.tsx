@@ -55,6 +55,7 @@ export default function ApparelPreview() {
             <p className="mt-8 text-sm leading-7 text-[#a49b90]">
               최종 사양과 출시 일정은 샘플 검토 및 생산 확정 후 공개합니다.
             </p>
+            <a href="/checkout" className="mt-8 inline-flex border border-[#c47a3a] px-6 py-4 text-xs font-black uppercase tracking-[0.2em] text-[#f5f1e8] transition hover:bg-[#c47a3a] hover:text-[#050505]">Checkout Preview</a>
           </div>
         </div>
       </div>
