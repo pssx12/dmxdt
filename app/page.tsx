@@ -43,7 +43,6 @@ export default function Home() {
             <p className="dmxdt-eyebrow">Contact</p>
             <h2 className="dmxdt-title mt-8">Begin your journey.</h2>
             <p className="dmxdt-copy mt-10">DMXDT는 질문하는 사람들과 함께 성장합니다.</p>
-            <p className="mt-10 text-3xl font-black tracking-[-0.06em] md:text-5xl">founder@dmxdt.com</p>
           </div>
         </section>
       </main>
