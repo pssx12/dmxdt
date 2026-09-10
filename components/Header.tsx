@@ -17,7 +17,7 @@ export default function Header() {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-[6vw] py-5 text-[#f5f1e8] backdrop-blur-md">
       <a href="/#home" className="flex items-center gap-3">
-        <Image src="/logo/dmxdt-eye-home-m-corrected.svg" alt="DMXDT" width={44} height={44} className="h-11 w-11 object-contain" />
+        <Image src="/logo/dmxdt-eye-official.png" alt="DMXDT" width={44} height={44} className="h-11 w-11 object-contain" />
         <span className="text-xl font-black tracking-[0.18em]">DMXDT</span>
       </a>
       <nav className="hidden gap-5 text-xs font-bold tracking-[0.18em] text-[#d2cabf] md:flex">
