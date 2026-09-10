@@ -16,6 +16,10 @@ export default function Footer() {
               <a href="/policy" className="transition hover:text-[#f5f1e8]">
                 배송·교환·환불 정책
               </a>
+              <span aria-hidden="true"> · </span>
+              <a href="https://verify.dmxdt.com" className="transition hover:text-[#f5f1e8]">
+                정품 인증
+              </a>
             </p>
           </div>
         </div>
