@@ -9,7 +9,7 @@ export default function Hero() {
 
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center text-center">
         <Image
-          src="/logo/dmxdt-eye-official.png"
+          src="/logo/dmxdt-eye-official-v2.svg"
           alt="DMXDT"
           width={560}
           height={360}
