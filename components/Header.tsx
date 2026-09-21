@@ -6,7 +6,7 @@ const nav = [
   ['FOUNDATION', '#foundation'],
   ['CURRENT', '#development'],
   ['APPAREL', '#apparel'],
-  ['SHOP', '/products/design-22-eye-ring'],
+  ['SHOP', '/products/foundation-001'],
   ['AUTHENTICITY', 'https://verify.dmxdt.com'],
   ['ARCHIVE', '#archive'],
   ['JOURNEY', '#journey'],

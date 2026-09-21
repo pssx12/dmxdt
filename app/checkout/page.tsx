@@ -16,7 +16,7 @@ declare global {
 
 export default function CheckoutPage() {
   const [color, setColor] = useState<string>(PRODUCT.colors[0]);
-  const [size, setSize] = useState<string>(PRODUCT.sizes[0]);
+  const [size, setSize] = useState<string>(PRODUCT.sizes[2]);
   const [quantity, setQuantity] = useState(1);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
