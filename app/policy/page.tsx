@@ -1,30 +1,14 @@
-import Link from 'next/link';
+import LegalPage from '@/components/LegalPage';
 
-const policies = [
-  ['배송', '정식 생산 및 판매 일정 확정 후 배송비와 출고 소요 기간을 결제창에 고지합니다.'],
-  ['교환·반품', '상품 수령 후 적용되는 신청 기간과 절차는 판매 개시 전 최종 확정하여 공개합니다.'],
-  ['불량·오배송', '검수 기준과 처리 절차를 사전에 공개하고, 확인된 불량 또는 오배송은 DMXDT가 책임 있게 처리합니다.'],
-  ['결제 취소', '출고 전 취소와 결제 취소 처리 기간은 연동될 결제대행사의 기준과 함께 안내합니다.'],
+const policies: Array<[string, string]> = [
+  ['배송', '결제 완료 후 영업일 기준 3~7일 이내 출고합니다. 제작·검수 또는 택배사 사정으로 지연될 경우 주문자 연락처로 안내합니다. 기본 배송비는 무료이며 제주·도서산간 지역의 추가 배송비가 발생할 경우 결제 전에 별도 안내합니다.'],
+  ['청약철회', '상품 수령일로부터 7일 이내 교환·반품을 신청할 수 있습니다. 표시·광고 내용과 다르거나 계약 내용과 다르게 이행된 경우에는 상품 수령일부터 3개월 이내 또는 그 사실을 안 날부터 30일 이내 신청할 수 있습니다.'],
+  ['교환·반품 제한', '구매자의 책임으로 상품이 훼손되거나 사용으로 가치가 현저히 감소한 경우, 세탁·수선한 경우, 구성품 또는 포장이 훼손되어 재판매가 어려운 경우에는 청약철회가 제한될 수 있습니다. 단, 상품 확인을 위한 포장 훼손은 제외합니다.'],
+  ['반품 비용', '단순 변심 교환·반품의 왕복 배송비는 구매자가 부담합니다. 상품 불량, 오배송 또는 표시·광고와 다른 경우의 배송비는 DMXDT가 부담합니다. 정확한 반품 주소와 비용은 신청 접수 시 안내합니다.'],
+  ['환불', '반품 상품 도착 및 검수 완료 후 영업일 기준 3일 이내 결제 취소를 요청합니다. 실제 환불 시점은 카드사 및 결제수단에 따라 달라질 수 있습니다.'],
+  ['신청 방법', '교환·반품·취소 신청은 고객센터 055-942-6878로 접수해 주세요. 임의 반송 시 처리가 지연될 수 있으므로 접수 후 안내받은 주소로 발송해 주세요.'],
 ];
 
 export default function PolicyPage() {
-  return (
-    <main className="min-h-screen bg-[#050505] px-6 py-12 text-[#f5f1e8] md:px-[6vw] md:py-20">
-      <div className="mx-auto max-w-4xl">
-        <Link href="/checkout" className="text-xs font-bold uppercase tracking-[0.22em] text-[#c47a3a]">← Checkout</Link>
-        <p className="dmxdt-eyebrow mt-16">Sales Policy · Pre-launch</p>
-        <h1 className="mt-7 text-5xl font-black leading-[0.94] tracking-[-0.07em] md:text-7xl">판매 운영 정책</h1>
-        <p className="mt-8 max-w-2xl text-lg leading-8 text-[#a49b90]">현재 상품은 샘플 개발 단계입니다. 아래 항목은 운영 원칙이며, 구체적인 기간·비용·절차는 생산과 판매 개시 전에 최종 고지합니다.</p>
-        <dl className="mt-14 divide-y divide-white/10 border-y border-white/10">
-          {policies.map(([title, detail]) => (
-            <div key={title} className="grid gap-4 py-8 md:grid-cols-[150px_1fr]">
-              <dt className="font-black">{title}</dt>
-              <dd className="leading-7 text-[#a49b90]">{detail}</dd>
-            </div>
-          ))}
-        </dl>
-        <p className="mt-8 text-sm leading-7 text-[#79736b]">이 페이지는 실제 판매 개시 전에 확정 내용으로 업데이트됩니다.</p>
-      </div>
-    </main>
-  );
+  return <LegalPage eyebrow="Shipping · Returns · Refunds" title="배송·교환·환불 정책" intro="전자상거래 등에서의 소비자보호에 관한 법률과 소비자분쟁해결기준에 따라 아래와 같이 운영합니다." sections={policies} />;
 }

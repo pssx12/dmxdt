@@ -6,7 +6,7 @@ const nav = [
   ['FOUNDATION', '#foundation'],
   ['CURRENT', '#development'],
   ['APPAREL', '#apparel'],
-  ['CHECKOUT', '/checkout'],
+  ['SHOP', '/products/foundation-001'],
   ['AUTHENTICITY', 'https://verify.dmxdt.com'],
   ['ARCHIVE', '#archive'],
   ['JOURNEY', '#journey'],
