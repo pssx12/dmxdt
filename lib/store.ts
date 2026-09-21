@@ -8,18 +8,18 @@ export const STORE = {
 } as const;
 
 export const PRODUCT = {
-  id: 'foundation-001-sweatshirt',
-  slug: 'foundation-001',
-  name: 'DMXDT Foundation 001 Premium Sweatshirt',
-  shortName: 'Foundation 001 Premium Sweatshirt',
-  price: 129_000,
+  id: 'design-117-question-answer-ring',
+  slug: 'question-answer-ring',
+  name: 'DMXDT 117 QUESTION / ANSWER 링',
+  shortName: '117 QUESTION / ANSWER Ring',
+  price: 1_290_000,
   shippingFee: 0,
-  colors: ['Black', 'Off White', 'Melange Grey'],
-  sizes: ['S', 'M', 'L', 'XL'],
-  material: '면 100% 헤비웨이트 3단쭈리(비기모 루프백)',
-  manufacturer: 'DMXDT 협력 생산처',
+  colors: ['18K Champagne Gold'],
+  sizes: ['KS 14'],
+  material: '18K Au750 샴페인 골드',
+  manufacturer: 'DMXDT 귀금속 협력 생산처',
   countryOfOrigin: '대한민국',
-  care: '찬물 단독 세탁 권장 · 표백제 및 건조기 사용 금지',
+  care: '화학제품·충격·고온 노출을 피하고 부드러운 천으로 관리',
 } as const;
 
 export function calculateOrderAmount(quantity: number) {
