@@ -8,13 +8,13 @@ export const STORE = {
 } as const;
 
 export const PRODUCT = {
-  id: 'design-117-question-answer-ring',
-  slug: 'question-answer-ring',
-  name: 'DMXDT 117 QUESTION / ANSWER 링',
-  shortName: '117 QUESTION / ANSWER Ring',
+  id: 'design-22-eye-ring',
+  slug: 'design-22-eye-ring',
+  name: 'DMXDT DESIGN 22 EYE RING',
+  shortName: 'DESIGN 22 EYE RING',
   price: 1_290_000,
   shippingFee: 0,
-  colors: ['18K Champagne Gold'],
+  colors: ['Champagne Gold'],
   sizes: ['KS 14'],
   material: '18K Au750 샴페인 골드',
   manufacturer: 'DMXDT 귀금속 협력 생산처',
