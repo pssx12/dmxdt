@@ -137,7 +137,7 @@ export default function CheckoutPage() {
             </fieldset>
             <fieldset>
               <legend className="checkout-label">반지 사이즈 (KS 표준)</legend>
-              <div className="relative mt-4">
+              <div className="relative mt-4 w-full max-w-[380px]">
                 <select
                   aria-label="반지 사이즈 선택"
                   value={size}
@@ -148,9 +148,9 @@ export default function CheckoutPage() {
                 </select>
                 <span aria-hidden="true" className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-lg text-[#c47a3a]">⌄</span>
               </div>
-              <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs leading-6">
+              <div className="mt-3 w-full max-w-[380px] text-xs leading-6">
                 <p className="text-[#79736b]">선택한 호수로 제작·검수됩니다. 사이즈가 확실하지 않다면 결제 전에 고객센터로 문의해 주세요.</p>
-                <p className="font-bold text-[#c47a3a]">{size} 선택됨</p>
+                <p className="mt-1 font-bold text-[#c47a3a]">{size} 선택됨</p>
               </div>
             </fieldset>
             <div>
