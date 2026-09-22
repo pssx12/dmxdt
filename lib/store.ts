@@ -4,7 +4,7 @@ export const STORE = {
   businessNumber: '898-39-01629',
   phone: '055-942-6878',
   address: '경상남도 거창군 거창읍 동동6길 100, 102동 201호(베어스타운)',
-  mailOrderNumber: process.env.NEXT_PUBLIC_MAIL_ORDER_NUMBER || '',
+  mailOrderNumber: process.env.NEXT_PUBLIC_MAIL_ORDER_NUMBER || '제2026-경남거창-00080호',
 } as const;
 
 export const PRODUCT = {
