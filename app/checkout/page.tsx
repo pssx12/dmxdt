@@ -137,10 +137,21 @@ export default function CheckoutPage() {
             </fieldset>
             <fieldset>
               <legend className="checkout-label">반지 사이즈 (KS 표준)</legend>
-              <div className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
-                {PRODUCT.sizes.map((item) => <button key={item} type="button" onClick={() => setSize(item)} className={`checkout-choice justify-center ${size === item ? 'checkout-choice-active' : ''}`}>{item}</button>)}
+              <div className="relative mt-4">
+                <select
+                  aria-label="반지 사이즈 선택"
+                  value={size}
+                  onChange={(event) => setSize(event.target.value)}
+                  className="checkout-select"
+                >
+                  {PRODUCT.sizes.map((item) => <option key={item} value={item}>{item}</option>)}
+                </select>
+                <span aria-hidden="true" className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-lg text-[#c47a3a]">⌄</span>
               </div>
-              <p className="mt-3 text-xs leading-6 text-[#79736b]">선택한 호수로 제작·검수됩니다. 사이즈가 확실하지 않다면 결제 전에 고객센터로 문의해 주세요.</p>
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs leading-6">
+                <p className="text-[#79736b]">선택한 호수로 제작·검수됩니다. 사이즈가 확실하지 않다면 결제 전에 고객센터로 문의해 주세요.</p>
+                <p className="font-bold text-[#c47a3a]">{size} 선택됨</p>
+              </div>
             </fieldset>
             <div>
               <p className="checkout-label">수량</p>
