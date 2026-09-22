@@ -20,7 +20,7 @@ export default function CheckoutFailPage() {
         <h1 className="mt-7 text-5xl font-black tracking-[-0.07em] md:text-7xl">Payment not completed.</h1>
         <p className="mt-7 text-lg leading-8 text-[#a49b90]">{reason}</p>
         {code && <p className="mt-4 text-sm text-[#c47a3a]">오류 코드: {code}</p>}
-        <p className="mt-6 border-t border-white/10 pt-6 text-sm leading-7 text-[#79736b]">테스트 결제에서도 카드·간편결제 인증에는 본인 결제정보가 필요합니다. 실제 금액은 출금되지 않습니다.</p>
+        <p className="mt-6 border-t border-white/10 pt-6 text-sm leading-7 text-[#79736b]">결제 승인 전에는 주문이 완료되지 않습니다. 결제수단을 확인한 뒤 다시 시도해 주세요.</p>
         <Link href="/checkout" className="mt-10 inline-flex border border-[#c47a3a] px-6 py-4 text-xs font-black uppercase tracking-[0.2em]">Return to checkout</Link>
       </div>
     </main>

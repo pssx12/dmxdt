@@ -11,8 +11,9 @@ export default function CheckoutSuccessPage() {
     const params = new URLSearchParams(window.location.search);
     const paymentKey = params.get('paymentKey');
     const orderId = params.get('orderId');
+    const orderToken = params.get('orderToken');
     const amount = Number(params.get('amount'));
-    if (!paymentKey || !orderId || !Number.isInteger(amount)) {
+    if (!paymentKey || !orderId || !orderToken || !Number.isInteger(amount)) {
       setState('fail');
       setMessage('결제 승인 정보가 누락되었습니다.');
       return;
@@ -20,13 +21,13 @@ export default function CheckoutSuccessPage() {
     fetch('/api/payments/confirm', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ paymentKey, orderId, amount }),
+      body: JSON.stringify({ paymentKey, orderId, amount, orderToken }),
     })
       .then(async (response) => {
         const data = await response.json();
         if (!response.ok) throw new Error(data.message || '결제 승인에 실패했습니다.');
         setState('success');
-        setMessage(`${amount.toLocaleString('ko-KR')}원 테스트 결제가 정상 승인되었습니다. 실제 금액은 청구되지 않습니다.`);
+        setMessage(`${amount.toLocaleString('ko-KR')}원 결제가 정상 승인되었습니다. 주문번호는 ${orderId}입니다.`);
       })
       .catch((error) => {
         setState('fail');
@@ -37,8 +38,8 @@ export default function CheckoutSuccessPage() {
   return (
     <main className="flex min-h-screen items-center bg-[#050505] px-6 text-[#f5f1e8]">
       <div className="mx-auto w-full max-w-3xl border border-white/10 bg-[#0b0b0b] p-8 md:p-14">
-        <p className="dmxdt-eyebrow">{state === 'success' ? 'Test Payment Complete' : state === 'fail' ? 'Test Payment Failed' : 'Confirming Test Payment'}</p>
-        <h1 className="mt-7 text-5xl font-black tracking-[-0.07em] md:text-7xl">{state === 'success' ? 'Test confirmed.' : state === 'fail' ? 'Check required.' : 'Please wait.'}</h1>
+        <p className="dmxdt-eyebrow">{state === 'success' ? 'Payment Complete' : state === 'fail' ? 'Payment Failed' : 'Confirming Payment'}</p>
+        <h1 className="mt-7 text-5xl font-black tracking-[-0.07em] md:text-7xl">{state === 'success' ? 'Order confirmed.' : state === 'fail' ? 'Check required.' : 'Please wait.'}</h1>
         <p className="mt-7 text-lg leading-8 text-[#a49b90]">{message}</p>
         <div className="mt-10 flex flex-wrap gap-3">
           {state === 'fail' && <Link href="/checkout" className="inline-flex bg-[#f5f1e8] px-6 py-4 text-xs font-black uppercase tracking-[0.2em] text-[#050505]">Try Again</Link>}
