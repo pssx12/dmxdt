@@ -10,8 +10,12 @@ function validText(value: unknown, max: number): value is string {
 
 export async function POST(request: NextRequest) {
   try {
+    const input = await request.json();
+    if (!input || typeof input !== 'object' || Array.isArray(input)) {
+      return NextResponse.json({ message: '주문 상품 또는 옵션 정보가 올바르지 않습니다.' }, { status: 400 });
+    }
     const { productId, quantity, color, size, customerName, customerPhone, customerEmail,
-      postalCode, address, detailAddress, deliveryMemo } = await request.json();
+      postalCode, address, detailAddress, deliveryMemo } = input;
     const phone = typeof customerPhone === 'string' ? customerPhone.replace(/\D/g, '') : '';
     if (
       productId !== PRODUCT.id ||
@@ -50,7 +54,6 @@ export async function POST(request: NextRequest) {
       VALUES (${orderId}, ${productId}, ${quantity}, ${color}, ${size}, ${amount},
        ${customerName.trim()}, ${phone}, ${customerEmail.trim()}, ${postalCode.trim()},
        ${address.trim()}, ${detailAddress.trim()}, ${(deliveryMemo || '').trim()})`;
-
 
     return NextResponse.json({ orderId, amount, orderToken });
   } catch (error) {
