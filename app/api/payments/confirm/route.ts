@@ -3,12 +3,16 @@ import { verifyOrderToken } from '@/lib/order-token';
 import { db } from '@/lib/db';
 
 export async function POST(request: NextRequest) {
-  let input;
+  let input: unknown;
   try { input = await request.json(); } catch {
     return NextResponse.json({ message: '결제 승인 정보가 올바르지 않습니다.' }, { status: 400 });
   }
-  const { paymentKey, orderId, amount, orderToken } = input;
-  if (!paymentKey || !orderId || !Number.isInteger(amount) || amount < 1 || !orderToken) {
+  if (!input || typeof input !== 'object' || Array.isArray(input)) {
+    return NextResponse.json({ message: '결제 승인 정보가 올바르지 않습니다.' }, { status: 400 });
+  }
+  const { paymentKey, orderId, amount, orderToken } = input as Record<string, unknown>;
+  if (typeof paymentKey !== 'string' || !paymentKey || typeof orderId !== 'string' || !orderId ||
+      !Number.isInteger(amount) || (amount as number) < 1 || typeof orderToken !== 'string' || !orderToken) {
     return NextResponse.json({ message: '결제 승인 정보가 올바르지 않습니다.' }, { status: 400 });
   }
 
