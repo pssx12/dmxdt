@@ -31,11 +31,13 @@ export default function CheckoutPage() {
   const [isRequesting, setIsRequesting] = useState(false);
   const [paymentError, setPaymentError] = useState('');
   const [widgetReady, setWidgetReady] = useState(false);
+  const [amountReady, setAmountReady] = useState(false);
   const widgetsRef = useRef<PaymentWidgets | null>(null);
+  const amountVersion = useRef(0);
   const totalAmount = PRODUCT.price * quantity + PRODUCT.shippingFee;
   const selection = useMemo(() => `${color} · ${size} · ${quantity}개`, [color, size, quantity]);
   const customerValid = customerName.trim().length >= 2 && /^01\d{8,9}$/.test(customerPhone.replace(/[^0-9]/g, '')) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail.trim());
-  const canPay = widgetReady && termsAccepted && privacyAccepted && customerValid && postalCode && address && detailAddress.trim();
+  const canPay = widgetReady && amountReady && termsAccepted && privacyAccepted && customerValid && postalCode && address && detailAddress.trim();
 
   const openAddressSearch = () => {
     if (!window.daum?.Postcode) {
@@ -72,6 +74,7 @@ export default function CheckoutPage() {
         if (active) {
           widgetsRef.current = widgets;
           setWidgetReady(true);
+          setAmountReady(true);
         }
       } catch (error) {
         if (active) setPaymentError(error instanceof Error ? error.message : '결제위젯을 불러오지 못했습니다.');
@@ -83,10 +86,17 @@ export default function CheckoutPage() {
   }, []);
 
   useEffect(() => {
-    widgetsRef.current?.setAmount({ currency: 'KRW', value: totalAmount }).catch(() => setPaymentError('결제금액을 변경하지 못했습니다.'));
+    const widgets = widgetsRef.current;
+    if (!widgets) return;
+    const version = ++amountVersion.current;
+    setAmountReady(false);
+    widgets.setAmount({ currency: 'KRW', value: totalAmount })
+      .then(() => { if (version === amountVersion.current) setAmountReady(true); })
+      .catch(() => { if (version === amountVersion.current) setPaymentError('결제금액을 변경하지 못했습니다.'); });
   }, [totalAmount]);
 
   const requestPayment = async () => {
+    if (!canPay) return;
     setPaymentError('');
     setIsRequesting(true);
     try {
@@ -95,7 +105,8 @@ export default function CheckoutPage() {
       const orderResponse = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId: PRODUCT.id, quantity, color, size }),
+        body: JSON.stringify({ productId: PRODUCT.id, quantity, color, size,
+          customerName, customerPhone, customerEmail, postalCode, address, detailAddress, deliveryMemo }),
       });
       const order = await orderResponse.json();
       if (!orderResponse.ok) throw new Error(order.message || '주문을 생성하지 못했습니다.');
@@ -156,9 +167,9 @@ export default function CheckoutPage() {
             <div>
               <p className="checkout-label">수량</p>
               <div className="mt-4 inline-flex items-center border border-white/15">
-                <button type="button" aria-label="수량 줄이기" onClick={() => setQuantity((value) => Math.max(1, value - 1))} className="h-12 w-12 text-xl hover:bg-white/10">−</button>
+                <button type="button" aria-label="수량 줄이기" disabled={quantity <= 1} onClick={() => { setAmountReady(false); setQuantity(quantity - 1); }} className="h-12 w-12 text-xl hover:bg-white/10 disabled:opacity-35">−</button>
                 <output className="w-14 text-center font-bold">{quantity}</output>
-                <button type="button" aria-label="수량 늘리기" onClick={() => setQuantity((value) => Math.min(3, value + 1))} className="h-12 w-12 text-xl hover:bg-white/10">+</button>
+                <button type="button" aria-label="수량 늘리기" disabled={quantity >= 3} onClick={() => { setAmountReady(false); setQuantity(quantity + 1); }} className="h-12 w-12 text-xl hover:bg-white/10 disabled:opacity-35">+</button>
               </div>
             </div>
             <div>

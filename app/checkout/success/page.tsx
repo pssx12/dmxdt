@@ -15,7 +15,7 @@ export default function CheckoutSuccessPage() {
     const amount = Number(params.get('amount'));
     if (!paymentKey || !orderId || !orderToken || !Number.isInteger(amount)) {
       setState('fail');
-      setMessage('결제 승인 정보가 누락되었습니다.');
+      setMessage('결제 상태를 확인해야 합니다. 다시 결제하지 말고 고객센터에 문의해 주세요.');
       return;
     }
     fetch('/api/payments/confirm', {
@@ -42,7 +42,7 @@ export default function CheckoutSuccessPage() {
         <h1 className="mt-7 text-5xl font-black tracking-[-0.07em] md:text-7xl">{state === 'success' ? 'Order confirmed.' : state === 'fail' ? 'Check required.' : 'Please wait.'}</h1>
         <p className="mt-7 text-lg leading-8 text-[#a49b90]">{message}</p>
         <div className="mt-10 flex flex-wrap gap-3">
-          {state === 'fail' && <Link href="/checkout" className="inline-flex bg-[#f5f1e8] px-6 py-4 text-xs font-black uppercase tracking-[0.2em] text-[#050505]">Try Again</Link>}
+          {state === 'fail' && <a href="tel:0559426878" className="inline-flex bg-[#f5f1e8] px-6 py-4 text-xs font-black tracking-[0.1em] text-[#050505]">고객센터 055-942-6878</a>}
           <Link href="/" className="inline-flex border border-[#c47a3a] px-6 py-4 text-xs font-black uppercase tracking-[0.2em]">DMXDT Home</Link>
         </div>
       </div>
