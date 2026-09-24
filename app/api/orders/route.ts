@@ -34,13 +34,6 @@ export async function POST(request: NextRequest) {
 
     const orderId = `DMXDT-${randomUUID().replaceAll('-', '')}`;
     const amount = calculateOrderAmount(quantity);
-    const sql = db();
-    await sql`INSERT INTO orders
-      (order_id, product_id, quantity, color, ring_size, amount, customer_name,
-       customer_phone, customer_email, postal_code, address, detail_address, delivery_memo)
-      VALUES (${orderId}, ${productId}, ${quantity}, ${color}, ${size}, ${amount},
-       ${customerName.trim()}, ${phone}, ${customerEmail.trim()}, ${postalCode.trim()},
-       ${address.trim()}, ${detailAddress.trim()}, ${(deliveryMemo || '').trim()})`;
     const orderToken = createOrderToken({
       orderId,
       productId,
@@ -50,6 +43,14 @@ export async function POST(request: NextRequest) {
       amount,
       expiresAt: Date.now() + 60 * 60 * 1000,
     });
+    const sql = db();
+    await sql`INSERT INTO orders
+      (order_id, product_id, quantity, color, ring_size, amount, customer_name,
+       customer_phone, customer_email, postal_code, address, detail_address, delivery_memo)
+      VALUES (${orderId}, ${productId}, ${quantity}, ${color}, ${size}, ${amount},
+       ${customerName.trim()}, ${phone}, ${customerEmail.trim()}, ${postalCode.trim()},
+       ${address.trim()}, ${detailAddress.trim()}, ${(deliveryMemo || '').trim()})`;
+
 
     return NextResponse.json({ orderId, amount, orderToken });
   } catch (error) {
