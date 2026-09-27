@@ -2,7 +2,7 @@ import { STORE } from '@/lib/store';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#f5f1e8]/10 bg-[#050505] px-[6vw] py-12 text-[#a49b90]">
+    <footer id="contact" className="border-t border-[#f5f1e8]/10 bg-[#050505] px-5 py-12 text-[#a49b90] md:px-[6vw]">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
@@ -13,7 +13,7 @@ export default function Footer() {
           </div>
 
           <div className="text-sm leading-7 md:text-right">
-            <p>Brand Platform · Archive · Journey · Foundation</p>
+            <p>Brand · First Drop · Authenticity</p>
             <p>
               <a href="/policy" className="transition hover:text-[#f5f1e8]">
                 배송·교환·환불 정책
