@@ -13,7 +13,7 @@ export default function Footer() {
           </div>
 
           <div className="text-sm leading-7 md:text-right">
-            <p>Brand · First Drop · Authenticity</p>
+            <p>브랜드 · 제품 구매 · 주문 조회 · 정품 인증</p>
             <p>
               <a href="/policy" className="transition hover:text-[#f5f1e8]">
                 배송·교환·환불 정책
