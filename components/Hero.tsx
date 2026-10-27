@@ -1,26 +1,54 @@
 export default function Hero() {
   return (
-    <section id="home" className="min-h-[88vh] bg-[#050505] px-5 text-[#f5f1e8] md:px-[6vw]">
-      <div className="mx-auto flex min-h-[88vh] max-w-6xl flex-col items-center justify-center pb-16 pt-28 text-center">
-        <p className="dmxdt-rise text-[11px] uppercase tracking-[0.34em] text-[#a49b90] md:text-xs">
-          Dirty Mind × Doubting Thomas
-        </p>
+    <section id="home" className="bg-[#050505] px-5 text-[#f5f1e8] md:px-[6vw]">
+      <div className="mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center pb-8 pt-24 md:pb-10 md:pt-28">
+        <div className="grid items-end gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
+          <div>
+            <p className="dmxdt-rise text-[11px] font-bold uppercase tracking-[0.34em] text-[#a49b90] md:text-xs">
+              DMXDT · Dirty Mind × Doubting Thomas
+            </p>
+            <h1 className="dmxdt-rise delay-1 mt-7 text-[clamp(50px,8.3vw,116px)] font-black uppercase leading-[0.84] tracking-[-0.08em]">
+              What did
+              <br />
+              you really
+              <br />
+              see?
+            </h1>
+          </div>
 
-        <h1 className="dmxdt-rise delay-1 mt-8 text-[clamp(54px,10vw,142px)] font-black uppercase leading-[0.84] tracking-[-0.08em]">
-          Question
-          <br />
-          Everything.
-        </h1>
+          <div className="dmxdt-rise delay-2 border-l border-[#c47a3a] pl-6 md:pl-8">
+            <p className="text-[clamp(23px,3vw,38px)] font-black leading-[1.28] tracking-[-0.055em]">
+              당신이 본 것은 진실입니까,
+              <br />
+              아니면 당신의 생각입니까?
+            </p>
+            <p className="mt-6 max-w-xl text-[15px] leading-7 text-[#b7afa5] md:text-[17px] md:leading-8">
+              DMXDT는 물건을 만들기 위해 시작된 브랜드가 아닙니다.
+              우리는 사람이 무엇을 보고, 왜 그렇게 믿으며,
+              어떻게 판단하는지를 묻습니다.
+            </p>
+          </div>
+        </div>
 
-        <p className="dmxdt-rise delay-2 mt-10 max-w-3xl text-[clamp(19px,2.5vw,32px)] font-semibold leading-[1.45] tracking-[-0.04em] text-[#f5f1e8]/90">
-          익숙한 것을 다르게 보고,<br />
-          믿기 전에 끝까지 확인합니다.
-        </p>
+        <div className="dmxdt-rise delay-3 mt-10 grid border-y border-white/12 md:grid-cols-3 md:divide-x md:divide-white/12">
+          <article className="py-4 md:px-5 md:first:pl-0">
+            <p className="text-[10px] font-black tracking-[0.23em] text-[#c47a3a]">DIRTY MIND</p>
+            <p className="mt-2 text-sm leading-6 text-[#d2cabf]">본능과 욕망이 먼저 만들어 낸 해석</p>
+          </article>
+          <article className="border-t border-white/12 py-4 md:border-t-0 md:px-5">
+            <p className="text-[10px] font-black tracking-[0.23em] text-[#c47a3a]">DOUBTING THOMAS</p>
+            <p className="mt-2 text-sm leading-6 text-[#d2cabf]">보이는 것조차 의심하고 확인하는 태도</p>
+          </article>
+          <article className="border-t border-white/12 py-4 md:border-t-0 md:px-5 md:last:pr-0">
+            <p className="text-[10px] font-black tracking-[0.23em] text-[#c47a3a]">DMXDT</p>
+            <p className="mt-2 text-sm leading-6 text-[#d2cabf]">두 시선 사이에서 스스로 답을 찾게 하는 질문</p>
+          </article>
+        </div>
 
-        <p className="dmxdt-rise delay-3 mt-7 max-w-2xl text-[clamp(15px,1.7vw,19px)] leading-8 text-[#a49b90]">
-          자유로운 상상과 집요한 검증.<br />
-          DMXDT는 그 사이에서 오래 남을 물건을 만듭니다.
-        </p>
+        <div className="dmxdt-rise delay-4 mt-7 flex flex-col gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#77716a] sm:flex-row sm:items-center sm:justify-between">
+          <p>We do not give answers.</p>
+          <p>We ask you to look again.</p>
+        </div>
       </div>
     </section>
   );
