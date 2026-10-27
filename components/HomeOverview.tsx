@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 const highlights = [
-  ['01', 'PRODUCT', '제품 구매', 'DMXDT의 첫 번째 18K 주얼리 DESIGN 22 EYE RING을 확인하고 주문할 수 있습니다.', '/products/design-22-eye-ring', '제품 보기'],
+  ['01', 'PRODUCT', '제품 구매', '주얼리·가방·의류·액세서리 제품군별로 DMXDT 컬렉션을 확인할 수 있습니다.', '/products', '제품 보기'],
   ['02', 'ORDER', '주문 조회', '주문번호와 주문자 정보를 이용해 결제 및 배송 진행 상태를 확인하는 기능을 준비하고 있습니다.', '/order-lookup', '조회 화면 보기'],
   ['03', 'AUTHENTICITY', '정품 인증', '제품의 고유 정보를 DMXDT 공식 인증 페이지에서 직접 확인할 수 있습니다.', 'https://verify.dmxdt.com', '인증 페이지'],
 ];
