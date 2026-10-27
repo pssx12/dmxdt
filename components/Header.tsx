@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const nav = [
   ['브랜드', '/#brand'],
-  ['제품 구매', '/products/design-22-eye-ring'],
+  ['제품 구매', '/products'],
   ['주문 조회', '/order-lookup'],
   ['정품 인증', 'https://verify.dmxdt.com'],
 ];
