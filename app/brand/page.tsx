@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 const principles = [
   ['질문', '당연하다고 여겨지는 것에 다시 질문합니다.'],
   ['확인', '보이는 말보다 근거와 실제를 직접 확인합니다.'],
-  ['재고', '선택하기 전에 한 번 더 생각합니다.'],
+  ['다시 생각', '선택하기 전에 한 번 더 생각합니다.'],
 ];
 
 export default function BrandPage() {
@@ -26,7 +26,7 @@ export default function BrandPage() {
               <div className="md:border-l md:border-white/10 md:pl-16">
                 <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#c47a3a]">Dirty Mind × Doubting Thomas</p>
                 <p className="mt-6 max-w-2xl text-base leading-8 text-[#aaa49c] md:text-lg md:leading-9">
-                  디엠엑스디티(DMXDT)는 익숙한 관점에 머물지 않고 질문하고 확인하는 태도를 바탕으로, 생활 전반의 다양한 영역을 전개하는 브랜드입니다.
+                  디엠엑스디티(DMXDT)는 익숙한 관점에 머물지 않고, 질문하고 확인하는 태도로 생활 전반의 영역을 전개합니다.
                 </p>
                 <p className="mt-5 max-w-2xl text-sm leading-7 text-[#716c66]">
                   이름은 새로운 관점으로 바라보는 Dirty Mind와 직접 확인하려는 Doubting Thomas의 결합입니다.
@@ -39,9 +39,10 @@ export default function BrandPage() {
         <section className="border-y border-white/10 bg-[#ebe7df] px-5 py-20 text-[#0a0a0a] md:px-[6vw] md:py-24">
           <div className="mx-auto grid max-w-[1280px] gap-8 md:grid-cols-[0.3fr_1fr] md:gap-14">
             <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#867b70]">Our Philosophy</p>
-            <blockquote className="text-[clamp(27px,3.6vw,50px)] font-medium leading-[1.35] tracking-[-0.055em]">
+            <blockquote className="text-[clamp(26px,3.2vw,44px)] font-medium leading-[1.35] tracking-[-0.055em]">
               세상을 부정하기 위해서가 아니라,<br />
-              당연한 것을 다시 묻고, 보이는 그대로 믿기 전에<br />
+              당연한 것을 다시 묻고,<br />
+              보이는 그대로 믿기 전에<br />
               한 번 더 생각합니다.
             </blockquote>
           </div>
