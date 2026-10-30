@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section id="home" className="bg-[#070707] px-5 text-[#f2f0eb] md:px-[5vw]">
+    <section id="home" className="relative bg-[#070707] px-5 text-[#f2f0eb] md:px-[5vw]">
       <div className="mx-auto flex min-h-[100svh] max-w-[1440px] flex-col items-center justify-center pb-10 pt-24 text-center">
         <p className="text-[10px] font-medium uppercase tracking-[0.42em] text-[#77746f] sm:text-xs">
           Dirty Mind × Doubting Thomas
