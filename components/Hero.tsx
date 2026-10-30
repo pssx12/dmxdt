@@ -7,7 +7,7 @@ export default function Hero() {
 
       <div className="mx-auto flex min-h-[100svh] max-w-[1440px] flex-col pb-12 pt-28 md:pt-32">
         <div className="flex items-center justify-between border-b border-white/10 pb-5 text-[9px] font-bold uppercase tracking-[0.3em] text-[#77736d] sm:text-[10px]">
-          <p>Dirty Mind × Doubting Thomas</p>
+          <p>Dirty Mind × Doubting Thoma<span className="inline-block -scale-x-100">s</span></p>
           <p>Independent Brand · Korea</p>
         </div>
 
