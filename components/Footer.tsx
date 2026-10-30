@@ -15,13 +15,11 @@ export default function Footer() {
             <p>상호명 {STORE.name}</p>
             <p>대표자명 {STORE.representative}</p>
             <p>사업자등록번호 {STORE.businessNumber}</p>
-            <p>전화번호 {STORE.phone}</p>
             <p>통신판매업 신고 {STORE.mailOrderNumber || '신고번호 확인 후 표기 예정'}</p>
-          </div>
-          <div className="flex flex-col gap-x-3 sm:flex-row sm:items-center sm:justify-between">
             <p>사업장 주소 {STORE.address}</p>
-            <p className="shrink-0 uppercase tracking-[0.06em]">© DMXDT. All Rights Reserved.</p>
+            <p>전화번호 {STORE.phone}</p>
           </div>
+          <p className="uppercase tracking-[0.06em]">© DMXDT. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
