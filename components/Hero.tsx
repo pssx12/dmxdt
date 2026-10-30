@@ -6,9 +6,9 @@ export default function Hero() {
       </div>
 
       <div className="mx-auto flex min-h-[100svh] max-w-[1440px] flex-col pb-12 pt-28 md:pt-32">
-        <div className="flex items-center justify-between border-b border-white/10 pb-5 text-[9px] font-bold uppercase tracking-[0.3em] text-[#77736d] sm:text-[10px]">
-          <p>Dirty Mind × Doubting Thoma<span className="inline-block -scale-x-100">s</span></p>
-          <p>Independent Brand · Korea</p>
+        <div className="flex items-center justify-between border-b border-white/10 pb-5 text-[9px] font-bold tracking-[0.24em] text-[#77736d] sm:text-[10px]">
+          <p>Dirty Mind × Doubting Thomaƨ</p>
+          <p className="uppercase">Independent Brand · Korea</p>
         </div>
 
         <div className="flex flex-1 flex-col items-center justify-center py-14 text-center">
