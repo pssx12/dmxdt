@@ -23,7 +23,7 @@ export default function Hero() {
 
           <div className="max-w-2xl lg:justify-self-end">
             <div className="mb-8 h-px w-12 bg-[#c47a3a]" aria-hidden="true" />
-            <p className="text-[clamp(25px,3.15vw,48px)] font-medium leading-[1.42] tracking-[-0.055em]">
+            <p className="text-[clamp(23px,2.7vw,40px)] font-medium leading-[1.42] tracking-[-0.055em]">
               세상을 부정하기 위해서가 아니라,<br />
               당연한 것을 다시 묻고,<br />
               보이는 그대로 믿기 전에<br />
