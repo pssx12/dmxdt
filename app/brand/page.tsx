@@ -24,7 +24,7 @@ export default function BrandPage() {
               </div>
 
               <div className="md:border-l md:border-white/10 md:pl-16">
-                <p className="text-[11px] font-bold tracking-[0.16em] text-[#c47a3a]">Dirty Mind × Doubting Thomaƨ</p>
+                <p className="text-[11px] font-bold normal-case tracking-[0.16em] text-[#c47a3a]">Dirty Mind × Doubting Thomaƨ</p>
                 <p className="mt-6 max-w-2xl text-base leading-8 text-[#aaa49c] md:text-lg md:leading-9">
                   디엠엑스디티(DMXDT)는 익숙한 관점에 머물지 않고, 질문하고 확인하는 태도로 생활 전반의 영역을 전개합니다.
                 </p>
