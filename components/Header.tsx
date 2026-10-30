@@ -1,5 +1,5 @@
 const productNav = [
-  ['브랜드', '/'],
+  ['브랜드', '/brand'],
   ['전체 상품', '/products'],
   ['의류', '/products/apparel'],
   ['패션잡화', '/products/fashion-goods'],
