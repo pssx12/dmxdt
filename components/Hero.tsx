@@ -23,11 +23,11 @@ export default function Hero() {
 
           <div className="max-w-2xl lg:justify-self-end">
             <div className="mb-8 h-px w-12 bg-[#c47a3a]" aria-hidden="true" />
-            <p className="text-[clamp(23px,2.7vw,40px)] font-medium leading-[1.42] tracking-[-0.055em]">
-              세상을 부정하기 위해서가 아니라,<br />
-              당연한 것을 다시 묻고,<br />
-              보이는 그대로 믿기 전에<br />
-              한 번 더 생각합니다.
+            <p className="text-[clamp(22px,2.3vw,35px)] font-medium leading-[1.42] tracking-[-0.055em]">
+              <span className="block md:whitespace-nowrap">세상을 부정하기 위해서가 아니라,</span>
+              <span className="block md:whitespace-nowrap">당연한 것을 다시 묻고,</span>
+              <span className="block md:whitespace-nowrap">보이는 그대로 믿기 전에</span>
+              <span className="block md:whitespace-nowrap">한 번 더 생각합니다.</span>
             </p>
           </div>
         </div>
