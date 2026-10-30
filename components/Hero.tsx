@@ -1,51 +1,37 @@
-import Image from 'next/image';
-
 export default function Hero() {
   return (
-    <section id="home" className="relative min-h-screen overflow-hidden bg-[#050505] px-6 text-[#f5f1e8]">
-      <div className="dmxdt-noise pointer-events-none absolute inset-0" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent" />
+    <section id="home" className="relative isolate overflow-hidden bg-[#050505] px-5 text-[#eeeae3] md:px-[5vw]">
+      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <div className="absolute left-1/2 top-[46%] h-80 w-80 -translate-x-1/2 rounded-full bg-[#c47a3a]/[0.04] blur-[130px] md:h-[520px] md:w-[520px]" />
+      </div>
 
-      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center text-center">
-        <Image
-          src="/logo/dmxdt-eye-official.png"
-          alt="DMXDT"
-          width={560}
-          height={360}
-          priority
-          className="dmxdt-rise dmxdt-pulse mb-8 h-auto w-[min(560px,78vw)] select-none object-contain drop-shadow-[0_24px_90px_rgba(196,122,58,0.20)]"
-        />
+      <div className="mx-auto flex min-h-[100svh] max-w-[1440px] flex-col pb-12 pt-28 md:pt-32">
+        <div className="flex items-center justify-between border-b border-white/10 pb-5 text-[9px] font-bold tracking-[0.24em] text-[#77736d] sm:text-[10px]">
+          <p className="normal-case">Dirty Mind × Doubting Thomaƨ</p>
+          <p className="uppercase">Independent Brand · Korea</p>
+        </div>
 
-        <p className="dmxdt-rise delay-1 mb-6 text-[11px] uppercase tracking-[0.36em] text-[#a49b90] md:text-xs">
-          Dirty Mind × Doubting Thomas
-        </p>
+        <div className="flex flex-1 flex-col items-center justify-center py-14 text-center">
+          <h1 className="text-[clamp(46px,7.6vw,108px)] font-black uppercase leading-[0.88] tracking-[-0.075em] md:whitespace-nowrap">
+            Question Everything.
+          </h1>
 
-        <h1 className="dmxdt-rise delay-2 dmxdt-display">
-          Question
-          <br />
-          Everything.
-        </h1>
+          <div className="my-10 flex items-center gap-4" aria-hidden="true">
+            <span className="h-px w-12 bg-white/15" />
+            <span className="h-1.5 w-1.5 rotate-45 border border-[#c47a3a]" />
+            <span className="h-px w-12 bg-white/15" />
+          </div>
 
-        <p className="dmxdt-rise delay-3 mt-8 text-[clamp(20px,2.4vw,34px)] font-semibold leading-tight text-[#f5f1e8]/90">
-          Not to reject the world.
-          <br />
-          To understand it better.
-        </p>
+          <p className="text-[clamp(22px,2.55vw,37px)] font-medium leading-[1.52] tracking-[-0.055em]">
+            <span className="block md:whitespace-nowrap">세상을 부정하기 위해서가 아니라, 당연한 것을 다시 묻고,</span>
+            <span className="block md:whitespace-nowrap">보이는 그대로 믿기 전에 한 번 더 생각합니다.</span>
+          </p>
+        </div>
 
-        <p className="dmxdt-rise delay-4 mt-9 max-w-2xl text-[clamp(17px,2vw,23px)] leading-9 text-[#d2cabf]">
-          세상을 부정하기 위해서가 아니라,
-          <br />
-          더 깊이 이해하기 위해 질문합니다.
-        </p>
-
-        <a
-          href="#why"
-          className="dmxdt-rise delay-5 group mt-12 inline-flex items-center gap-3 rounded-full border border-[#f5f1e8]/70 px-8 py-4 text-xs font-bold uppercase tracking-[0.24em] transition duration-300 hover:border-[#f5f1e8] hover:bg-[#f5f1e8] hover:text-[#050505]"
-        >
-          Enter The Journey
-          <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-        </a>
+        <div className="flex items-center justify-between border-t border-white/10 pt-5 text-[9px] uppercase tracking-[0.24em] text-[#5f5b56]">
+          <p>A way of seeing, thinking and choosing.</p>
+          <p>DMXDT</p>
+        </div>
       </div>
     </section>
   );

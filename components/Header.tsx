@@ -1,32 +1,33 @@
-import Image from 'next/image';
-
-const nav = [
-  ['WHY', '#why'],
-  ['PHILOSOPHY', '#philosophy'],
-  ['FOUNDATION', '#foundation'],
-  ['CURRENT', '#development'],
-  ['APPAREL', '#apparel'],
-  ['SHOP', '/products/design-22-eye-ring'],
-  ['AUTHENTICITY', 'https://verify.dmxdt.com'],
-  ['ARCHIVE', '#archive'],
-  ['JOURNEY', '#journey'],
-  ['CONTACT', '#contact'],
+const primaryNav = [
+  ['브랜드', '/brand'],
+  ['전체 상품', '/products'],
+  ['의류', '/products/apparel'],
+  ['패션잡화', '/products/fashion-goods'],
+  ['주얼리', '/products/jewelry'],
+  ['리빙', '/products/living'],
+  ['디지털 가전', '/products/digital'],
+  ['기타', '/products/etc'],
 ];
 
 export default function Header() {
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-[6vw] py-5 text-[#f5f1e8] backdrop-blur-md">
-      <a href="/#home" className="flex items-center gap-3">
-        <Image src="/logo/dmxdt-eye-official.png" alt="DMXDT" width={44} height={44} className="h-11 w-11 object-contain" />
-        <span className="text-xl font-black tracking-[0.18em]">DMXDT</span>
-      </a>
-      <nav className="hidden gap-5 text-xs font-bold tracking-[0.18em] text-[#d2cabf] md:flex">
-        {nav.map(([label, href]) => (
-          <a key={label} href={href} className="relative transition hover:text-[#f5f1e8] after:absolute after:-bottom-2 after:left-0 after:h-px after:w-0 after:bg-[#c47a3a] after:transition-all hover:after:w-full">
-            {label}
-          </a>
-        ))}
-      </nav>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#070707]/95 text-[#f2f0eb] backdrop-blur-md">
+      <div className="overflow-x-auto px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:px-[5vw]">
+        <div className="mx-auto grid h-16 min-w-[1040px] max-w-[1440px] grid-cols-[auto_1fr_auto] items-center gap-8">
+          <a href="/" className="shrink-0 text-sm font-black tracking-[0.28em] sm:text-base" aria-label="DMXDT 홈">DMXDT</a>
+
+          <nav aria-label="주요 메뉴" className="flex items-center justify-center gap-7 text-[11px] font-medium text-[#a29e98] xl:gap-9 xl:text-xs">
+            {primaryNav.map(([label, href]) => (
+              <a key={label} href={href} className="whitespace-nowrap transition-colors hover:text-white">{label}</a>
+            ))}
+          </nav>
+
+          <nav aria-label="기능 메뉴" className="flex items-center gap-6 border-l border-white/15 pl-7 text-[11px] font-medium text-[#77736d] xl:text-xs">
+            <a href="/order-lookup" className="whitespace-nowrap transition-colors hover:text-white">주문 조회</a>
+            <a href="https://verify.dmxdt.com" className="whitespace-nowrap transition-colors hover:text-white">정품 인증</a>
+          </nav>
+        </div>
+      </div>
     </header>
   );
 }
