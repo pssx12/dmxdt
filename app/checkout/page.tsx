@@ -31,11 +31,13 @@ export default function CheckoutPage() {
   const [isRequesting, setIsRequesting] = useState(false);
   const [paymentError, setPaymentError] = useState('');
   const [widgetReady, setWidgetReady] = useState(false);
+  const [checkoutReady, setCheckoutReady] = useState(false);
+  const [checkoutChecked, setCheckoutChecked] = useState(false);
   const widgetsRef = useRef<PaymentWidgets | null>(null);
   const totalAmount = PRODUCT.price * quantity + PRODUCT.shippingFee;
   const selection = useMemo(() => `${color} · ${size} · ${quantity}개`, [color, size, quantity]);
   const customerValid = customerName.trim().length >= 2 && /^01\d{8,9}$/.test(customerPhone.replace(/[^0-9]/g, '')) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail.trim());
-  const canPay = widgetReady && termsAccepted && privacyAccepted && customerValid && postalCode && address && detailAddress.trim();
+  const canPay = checkoutReady && widgetReady && termsAccepted && privacyAccepted && customerValid && postalCode && address && detailAddress.trim();
 
   const openAddressSearch = () => {
     if (!window.daum?.Postcode) {
@@ -54,6 +56,15 @@ export default function CheckoutPage() {
   };
 
   useEffect(() => {
+    fetch('/api/checkout/status', { cache: 'no-store' })
+      .then((response) => response.json())
+      .then((result) => setCheckoutReady(result.enabled === true))
+      .catch(() => setCheckoutReady(false))
+      .finally(() => setCheckoutChecked(true));
+  }, []);
+
+  useEffect(() => {
+    if (!checkoutReady) return;
     let active = true;
     const initializeWidgets = async () => {
       const clientKey = process.env.NEXT_PUBLIC_TOSS_PAYMENTS_CLIENT_KEY;
@@ -80,7 +91,7 @@ export default function CheckoutPage() {
     initializeWidgets();
     return () => { active = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [checkoutReady]);
 
   useEffect(() => {
     widgetsRef.current?.setAmount({ currency: 'KRW', value: totalAmount }).catch(() => setPaymentError('결제금액을 변경하지 못했습니다.'));
@@ -95,14 +106,18 @@ export default function CheckoutPage() {
       const orderResponse = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId: PRODUCT.id, quantity, color, size }),
+        body: JSON.stringify({
+          productId: PRODUCT.id, quantity, color, size,
+          customerName, customerPhone, customerEmail, postalCode,
+          address, detailAddress, deliveryMemo,
+        }),
       });
       const order = await orderResponse.json();
       if (!orderResponse.ok) throw new Error(order.message || '주문을 생성하지 못했습니다.');
       await widgets.requestPayment({
         orderId: order.orderId,
         orderName: quantity === 1 ? PRODUCT.name : `${PRODUCT.name} 외 ${quantity - 1}개`,
-        successUrl: `${window.location.origin}/checkout/success?orderToken=${encodeURIComponent(order.orderToken)}`,
+        successUrl: `${window.location.origin}/checkout/success`,
         failUrl: `${window.location.origin}/checkout/fail`,
         customerEmail: customerEmail.trim(),
         customerName: customerName.trim(),
@@ -201,6 +216,7 @@ export default function CheckoutPage() {
               <div className="flex justify-between border-t border-white/10 pt-5 text-lg font-black"><dt>총 결제금액</dt><dd>{totalAmount.toLocaleString('ko-KR')}원</dd></div>
             </dl>
             <button type="button" disabled={!canPay || isRequesting} onClick={requestPayment} className={`w-full bg-[#f5f1e8] px-5 py-5 text-sm font-black tracking-[0.08em] text-[#050505] transition ${canPay && !isRequesting ? 'hover:bg-[#c47a3a]' : 'cursor-not-allowed opacity-35'}`}>{isRequesting ? '결제창 여는 중…' : `${totalAmount.toLocaleString('ko-KR')}원 결제하기`}</button>
+            {checkoutChecked && !checkoutReady && <p role="status" className="mt-4 text-sm leading-6 text-[#e89b72]">현재 온라인 결제를 준비하고 있습니다. 결제 기능이 활성화되기 전에는 주문 또는 결제가 진행되지 않습니다.</p>}
             {paymentError && <p role="alert" className="mt-4 text-sm leading-6 text-[#e89b72]">{paymentError}</p>}
             <p className="mt-5 text-center text-xs leading-6 text-[#79736b]">결제정보는 토스페이먼츠의 보안 결제창에서 처리됩니다.</p>
           </div>
