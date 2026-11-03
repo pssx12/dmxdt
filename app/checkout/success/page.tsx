@@ -30,7 +30,9 @@ export default function CheckoutSuccessPage() {
             setMessage((data.message || '결제 상태를 확인해야 합니다.') + ' 주문번호: ' + orderId);
             return;
           }
-          throw new Error(data.message || '결제 승인에 실패했습니다.');
+          setState('fail');
+          setMessage(data.message || '결제 승인이 완료되지 않았습니다.');
+          return;
         }
         if (data.status === 'awaiting_deposit') {
           setState('awaiting_deposit');
