@@ -103,6 +103,7 @@ export default function CheckoutPage() {
     try {
       const widgets = widgetsRef.current;
       if (!widgets) throw new Error('결제위젯이 아직 준비되지 않았습니다.');
+      await widgets.setAmount({ currency: 'KRW', value: totalAmount });
       const orderResponse = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
